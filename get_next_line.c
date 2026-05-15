@@ -6,7 +6,7 @@
 /*   By: apinho-a <apinho-a@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 22:31:59 by apinho-a          #+#    #+#             */
-/*   Updated: 2026/05/16 00:34:47 by apinho-a         ###   ########.fr       */
+/*   Updated: 2026/05/16 00:54:32 by apinho-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ char	*get_next_line(int fd)
 		acc = ft_strjoin(acc, BUFFER);
 		cycle++;
 	}
+	// missing returning the correct string
 	return (acc);
 }
