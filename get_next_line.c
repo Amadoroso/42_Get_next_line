@@ -6,7 +6,7 @@
 /*   By: apinho-a <apinho-a@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 22:31:59 by apinho-a          #+#    #+#             */
-/*   Updated: 2026/05/20 18:13:56 by apinho-a         ###   ########.fr       */
+/*   Updated: 2026/05/20 19:03:35 by apinho-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 char	*get_next_line(int fd)
 {
-	ssize_t	read_rtrn;
-	size_t	cycle;
-	char	*buffer;
+	ssize_t		read_rtrn;
+	size_t		cycle;
+	char		*buffer;
 	static char	*acc;
-	
+
 	buffer = (char *) malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer || BUFFER_SIZE <= 0)
 		return (free(buffer), NULL);
@@ -29,12 +29,14 @@ char	*get_next_line(int fd)
 		read_rtrn = read(fd, buffer, BUFFER_SIZE);
 		if (read_rtrn == -1)
 			return (NULL);
+		if (read_rtrn == 0)
+			break ;
 		*(buffer + read_rtrn) = 0;
 		acc = ft_strjoin(acc, buffer);
 		cycle++;
 	}
 	free(buffer);
-	return (ft_split_mod(&acc));
+	return (ft_split_mini(&acc));
 }
 
 /* int main()
@@ -43,9 +45,12 @@ char	*get_next_line(int fd)
 	char	*str;
 
 	fd = open("test", O_RDWR | O_CREAT, 0644);
-	write(fd, "wesutygryderxcfgvuyhgtfcg\ndrxcfvyggtdrxcfgvytrydcg fjv\nawzexsdcyreszxd12234\n", 76);
+	write(fd, "wesutygryderxcfgvuyhgtfcg\ndrxcfvyggtdrxcfgvytrydcg fjv\0", 76);
 	close(fd);
 	fd = open("test", O_RDONLY);
+	str = get_next_line(fd);
+	printf("%s", str);
+	free (str);
 	str = get_next_line(fd);
 	printf("%s", str);
 	free (str);

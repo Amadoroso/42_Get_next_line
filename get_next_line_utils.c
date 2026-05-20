@@ -6,7 +6,7 @@
 /*   By: apinho-a <apinho-a@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 22:32:44 by apinho-a          #+#    #+#             */
-/*   Updated: 2026/05/20 18:12:28 by apinho-a         ###   ########.fr       */
+/*   Updated: 2026/05/20 19:01:41 by apinho-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_strjoin(char *s1, char *s2)
 size_t	ft_strlen(const char *s, char end)
 {
 	size_t	len;
-	
+
 	len = 0;
 	if (!s)
 		return (len);
@@ -65,7 +65,7 @@ size_t	ft_new_line_check(char *acc, ssize_t BUF_SIZE, ssize_t cycle)
 {
 	ssize_t	start;
 	ssize_t	end;
-	
+
 	end = BUF_SIZE * cycle;
 	start = BUF_SIZE * (cycle - 1);
 	while (start < end && start >= 0)
@@ -77,7 +77,7 @@ size_t	ft_new_line_check(char *acc, ssize_t BUF_SIZE, ssize_t cycle)
 	return (0);
 }
 
-char	*ft_split_mod(char **acc_ptr)
+char	*ft_split_mini(char **acc_ptr)
 {
 	int		size_res;
 	int		size_acc;
