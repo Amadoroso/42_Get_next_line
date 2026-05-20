@@ -3,11 +3,11 @@
 ---
 
 ## Description
-The goal of this project is to program a function that returns a line read from a file descriptor[cite: 4, 87]. It serves as an introduction to using static variables in C programming. Repeated calls to the function read the text file one line at a time until the end of the file or an error occurs[cite: 88, 91].
+The goal of this project is to program a function that returns a line read from a file descriptor. It serves as an introduction to using static variables in C programming. Repeated calls to the function read the text file one line at a time until the end of the file or an error occurs.
 
 ## Instructions
 **Compilation**
-The project must be compiled using `cc` with the mandatory flags and a defined buffer size. Run the following at the root of the repository[cite: 108]:
+The project must be compiled using `cc` with the mandatory flags and a defined buffer size. Run the following at the root of the repository:
 `cc -Wall -Wextra -Werror -D BUFFER_SIZE=42 get_next_line.c get_next_line_utils.c`
 
 To compile the bonus part, which allows managing multiple file descriptors simultaneously using a single static variable:
@@ -18,7 +18,7 @@ To compile the bonus part, which allows managing multiple file descriptors simul
 * **AI Usage**: AI was used to parse the subject requirements, format the README structure, and draft the algorithm justification.
 
 ## Algorithm Justification
-The algorithm relies on a static variable to persist the reading state of the file descriptor between function calls. 
+The algorithm relies on a static variable to persist the reading state of the file descriptor between function calls.
 1. A temporary buffer of size `BUFFER_SIZE` is allocated to read chunks of the file.
 2. The `read()` function fetches data into the buffer, which is then joined with the existing data in the static variable.
 3. The static string is parsed for a newline character (`\n`).
