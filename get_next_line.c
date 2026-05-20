@@ -6,7 +6,7 @@
 /*   By: apinho-a <apinho-a@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 22:31:59 by apinho-a          #+#    #+#             */
-/*   Updated: 2026/05/18 20:26:48 by apinho-a         ###   ########.fr       */
+/*   Updated: 2026/05/20 18:13:56 by apinho-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,30 +16,28 @@ char	*get_next_line(int fd)
 {
 	ssize_t	read_rtrn;
 	size_t	cycle;
-	char	*BUFFER;
+	char	*buffer;
 	static char	*acc;
 	
-	if (BUFFER_SIZE < 0)
-		return (NULL);
-	BUFFER = (char *) malloc(BUFFER_SIZE * sizeof(char));
-	if (!BUFFER)
-		return (NULL);
+	buffer = (char *) malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!buffer || BUFFER_SIZE <= 0)
+		return (free(buffer), NULL);
 	cycle = 0;
 	read_rtrn = 0;
-	while (ft_new_line_check(acc, BUFFER_SIZE, cycle) == 0)
+	while (!ft_new_line_check(acc, BUFFER_SIZE, cycle))
 	{
-		read_rtrn = read(fd, BUFFER, BUFFER_SIZE);
+		read_rtrn = read(fd, buffer, BUFFER_SIZE);
 		if (read_rtrn == -1)
 			return (NULL);
-		*(BUFFER + read_rtrn - 1) = 0;
-		acc = ft_strjoin(acc, BUFFER);
+		*(buffer + read_rtrn) = 0;
+		acc = ft_strjoin(acc, buffer);
 		cycle++;
 	}
-	free(BUFFER);
-	return (ft_strtrim_mod(acc));
+	free(buffer);
+	return (ft_split_mod(&acc));
 }
 
-int main()
+/* int main()
 {
 	int fd;
 	char	*str;
@@ -49,7 +47,20 @@ int main()
 	close(fd);
 	fd = open("test", O_RDONLY);
 	str = get_next_line(fd);
-	printf("%s\n", str);
+	printf("%s", str);
+	free (str);
+	str = get_next_line(fd);
+	printf("%s", str);
+	free (str);
+	str = get_next_line(fd);
+	printf("%s", str);
+	free (str);
+	str = get_next_line(fd);
+	printf("%s", str);
+	free (str);
+	str = get_next_line(fd);
+	printf("%s", str);
+	free (str);
 	close(fd);
 	return (0);
-}
+} */

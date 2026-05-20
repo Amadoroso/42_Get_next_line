@@ -6,7 +6,7 @@
 /*   By: apinho-a <apinho-a@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 22:32:44 by apinho-a          #+#    #+#             */
-/*   Updated: 2026/05/18 20:26:52 by apinho-a         ###   ########.fr       */
+/*   Updated: 2026/05/20 18:12:28 by apinho-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,28 +18,27 @@ char	*ft_strjoin(char *s1, char *s2)
 	size_t	len1;
 	size_t	len2;
 
-	if (!s1 || !s2)
-	{
+	if (!s2)
 		return (NULL);
-		free(s1);
-	}
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
+	len1 = ft_strlen(s1, 0);
+	len2 = ft_strlen(s2, 0);
 	s1_s2 = (char *) malloc((len1 + len2 + 1) * sizeof(char));
 	if (s1_s2 == 0)
 		return (NULL);
-	ft_strlcpy(s1_s2, s1, len1 + 1);
-	ft_strlcpy(s1_s2 + len1, s2, len2 + 1);
-	free(s1);
+	ft_strlcpy(s1_s2, s1, len1);
+	ft_strlcpy(s1_s2 + len1, s2, len2);
+	free (s1);
 	return (s1_s2);
 }
 
-size_t	ft_strlen(const char *s)
+size_t	ft_strlen(const char *s, char end)
 {
 	size_t	len;
-
+	
 	len = 0;
-	while (*s++)
+	if (!s)
+		return (len);
+	while (*(s + len) != 0 && *(s + len) != end)
 		len++;
 	return (len);
 }
@@ -49,13 +48,11 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	size_t	len;
 	size_t	index;
 
-	len = 0;
-	while (*(src + len))
-		len++;
+	len = ft_strlen(src, 0);
 	if (size == 0)
 		return (len);
 	index = 0;
-	while (index < (size - 1) && *src)
+	while (index < size && *src)
 	{
 		*dst++ = *src++;
 		index++;
@@ -74,28 +71,26 @@ size_t	ft_new_line_check(char *acc, ssize_t BUF_SIZE, ssize_t cycle)
 	while (start < end && start >= 0)
 	{
 		if (*(acc + start) == '\n' || *(acc + start) == 0)
-			return (1);
+			return (start);
 		start++;
 	}
-	return (start);
+	return (0);
 }
 
-char	*ft_strtrim_mod(char *s1)
+char	*ft_split_mod(char **acc_ptr)
 {
-	size_t	end;
+	int		size_res;
+	int		size_acc;
 	char	*result;
+	char	*new_acc;
 
-	if (s1 == NULL)
-		return (NULL);
-	end = ft_strlen(s1) - 1;
-	while (s1[end] != '\n' || s1[end] != 0)
-		end--;
-	if (end < 0)
-		return (NULL);
-	result = malloc((end + 1) * sizeof(char));
-	if (result == 0)
-		return (NULL);
-	free(s1);
-	ft_strlcpy(result, s1, end);
+	size_res = ft_strlen(*acc_ptr, '\n');
+	size_acc = ft_strlen(*acc_ptr + size_res + 1, '\n');
+	new_acc = (char *) malloc((size_acc + 1) * sizeof(char));
+	result = (char *) malloc((size_res + 1) * sizeof(char));
+	ft_strlcpy(result, *acc_ptr, size_res + 1);
+	ft_strlcpy(new_acc, *acc_ptr + size_res + 1 + 1, size_acc);
+	free(*acc_ptr);
+	*acc_ptr = new_acc;
 	return (result);
 }
