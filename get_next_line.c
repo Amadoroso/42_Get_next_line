@@ -6,7 +6,7 @@
 /*   By: apinho-a <apinho-a@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 22:31:59 by apinho-a          #+#    #+#             */
-/*   Updated: 2026/05/25 18:30:08 by apinho-a         ###   ########.fr       */
+/*   Updated: 2026/05/25 20:14:44 by apinho-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*get_next_line(int fd)
 	{
 		read_rtrn = read(fd, buffer, BUFFER_SIZE);
 		if (read_rtrn == -1)
-			return (NULL);
+			return (free(buffer), NULL);
 		if (read_rtrn == 0)
 			break ;
 		*(buffer + read_rtrn) = 0;
@@ -59,7 +59,7 @@ char	*get_next_line(int fd)
 	return (0);
 } */
 
-/* int main()
+int main()
 {
 	int fd;
 	char	*str;
@@ -68,6 +68,7 @@ char	*get_next_line(int fd)
 	write(fd, "Line1\nLine2\nLine3", 17);
 	close(fd);
 	fd = open("test", O_RDONLY);
+	fd = 6;
 	str = get_next_line(fd);
 	printf("%s", str);
 	free (str);
@@ -88,4 +89,4 @@ char	*get_next_line(int fd)
 	free (str);
 	close(fd);
 	return (0);
-} */
+}
