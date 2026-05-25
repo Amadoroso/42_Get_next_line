@@ -6,12 +6,16 @@
 /*   By: apinho-a <apinho-a@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 22:33:08 by apinho-a          #+#    #+#             */
-/*   Updated: 2026/05/20 19:01:24 by apinho-a         ###   ########.fr       */
+/*   Updated: 2026/05/25 18:24:50 by apinho-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
+
+#ifndef BUFFER_SIZE
+# define BUFFER_SIZE 42
+#endif
 
 # include <stdlib.h>
 # include <unistd.h>
