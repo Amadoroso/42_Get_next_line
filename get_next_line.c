@@ -6,7 +6,7 @@
 /*   By: apinho-a <apinho-a@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 22:31:59 by apinho-a          #+#    #+#             */
-/*   Updated: 2026/05/27 18:39:38 by apinho-a         ###   ########.fr       */
+/*   Updated: 2026/05/27 18:44:15 by apinho-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*get_next_line(int fd)
 	return (0);
 } */
 
-int main()
+/* int main()
 {
 	int fd;
 	char	*str;
@@ -89,4 +89,4 @@ int main()
 	free (str);
 	close(fd);
 	return (0);
-}
+} */
