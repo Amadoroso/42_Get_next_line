@@ -6,7 +6,7 @@
 /*   By: apinho-a <apinho-a@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 22:32:44 by apinho-a          #+#    #+#             */
-/*   Updated: 2026/05/27 15:44:59 by apinho-a         ###   ########.fr       */
+/*   Updated: 2026/05/27 18:39:03 by apinho-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	len2 = ft_strlen(s2, 0);
 	s1_s2 = (char *) malloc((len1 + len2 + 1) * sizeof(char));
 	if (s1_s2 == 0)
-		return (NULL);
+		return (free(s1), NULL);
 	ft_strlcpy(s1_s2, s1, len1 + 1);
 	ft_strlcpy(s1_s2 + len1, s2, len2 + 1);
 	free (s1);
@@ -88,6 +88,8 @@ char	*ft_split_mini(char **acc_ptr)
 
 	if (!*acc_ptr)
 		return (NULL);
+	if (**acc_ptr == 0)
+		return (free (*acc_ptr), NULL);
 	size_res = ft_strlen(*acc_ptr, '\n');
 	if (*(*acc_ptr + size_res) == 0)
 		new_acc = NULL;
