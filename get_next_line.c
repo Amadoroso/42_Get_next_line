@@ -6,7 +6,7 @@
 /*   By: apinho-a <apinho-a@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 22:31:59 by apinho-a          #+#    #+#             */
-/*   Updated: 2026/05/27 13:08:23 by apinho-a         ###   ########.fr       */
+/*   Updated: 2026/05/27 15:44:18 by apinho-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*get_next_line(int fd)
 	char	*str;
 
 	fd = open("test", O_RDWR | O_CREAT, 0644);
-	write(fd, "Line1\nLine2\nLine3", 17);
+	write(fd, NULL, 1);
 	close(fd);
 	fd = open("test", O_RDONLY);
 	fd = 6;

@@ -6,7 +6,7 @@
 /*   By: apinho-a <apinho-a@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 22:32:44 by apinho-a          #+#    #+#             */
-/*   Updated: 2026/05/25 18:10:19 by apinho-a         ###   ########.fr       */
+/*   Updated: 2026/05/27 15:44:59 by apinho-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,14 @@ char	*ft_split_mini(char **acc_ptr)
 	{
 		size_acc = ft_strlen(*acc_ptr + size_res + 1, 0);
 		new_acc = (char *) malloc((size_acc + 1) * sizeof(char));
+		if (!new_acc)
+			return (NULL);
 		ft_strlcpy(new_acc, *acc_ptr + size_res + 1, size_acc + 1);
 		size_res++;
 	}
 	result = (char *) malloc((size_res + 1) * sizeof(char));
+	if (!result)
+		return (free(new_acc), NULL);
 	ft_strlcpy(result, *acc_ptr, size_res + 1);
 	free(*acc_ptr);
 	*acc_ptr = new_acc;
