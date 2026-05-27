@@ -6,7 +6,7 @@
 /*   By: apinho-a <apinho-a@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 22:31:59 by apinho-a          #+#    #+#             */
-/*   Updated: 2026/05/27 18:44:15 by apinho-a         ###   ########.fr       */
+/*   Updated: 2026/05/27 19:08:05 by apinho-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,28 @@ char	*get_next_line(int fd)
 		return (NULL);
 	buffer = (char *) malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
-		return (free(buffer), NULL);
+		return (NULL);
 	cycle = 0;
 	read_rtrn = 0;
 	while (!ft_new_line_check(acc, BUFFER_SIZE, cycle))
 	{
 		read_rtrn = read(fd, buffer, BUFFER_SIZE);
 		if (read_rtrn == -1)
-			return (free(acc), free(buffer), NULL);
+		{
+			free(acc);
+			acc = NULL;
+			return (free(buffer), NULL);			
+		}
 		if (read_rtrn == 0)
 			break ;
 		*(buffer + read_rtrn) = 0;
 		acc = ft_strjoin(acc, buffer);
+		if (!acc)
+		{
+			free(acc);
+			acc = NULL;
+			return (free(buffer), NULL);
+		}
 		cycle++;
 	}
 	return (free(buffer), ft_split_mini(&acc));

@@ -6,7 +6,7 @@
 /*   By: apinho-a <apinho-a@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 22:32:44 by apinho-a          #+#    #+#             */
-/*   Updated: 2026/05/27 18:39:03 by apinho-a         ###   ########.fr       */
+/*   Updated: 2026/05/27 19:03:15 by apinho-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,11 @@ char	*ft_split_mini(char **acc_ptr)
 	if (!*acc_ptr)
 		return (NULL);
 	if (**acc_ptr == 0)
-		return (free (*acc_ptr), NULL);
+	{
+		free(*acc_ptr);
+		*acc_ptr = NULL;
+		return (NULL);
+	}
 	size_res = ft_strlen(*acc_ptr, '\n');
 	if (*(*acc_ptr + size_res) == 0)
 		new_acc = NULL;
@@ -98,13 +102,21 @@ char	*ft_split_mini(char **acc_ptr)
 		size_acc = ft_strlen(*acc_ptr + size_res + 1, 0);
 		new_acc = (char *) malloc((size_acc + 1) * sizeof(char));
 		if (!new_acc)
+		{
+			free (*acc_ptr);
+			*acc_ptr = NULL;
 			return (NULL);
+		}
 		ft_strlcpy(new_acc, *acc_ptr + size_res + 1, size_acc + 1);
 		size_res++;
 	}
 	result = (char *) malloc((size_res + 1) * sizeof(char));
 	if (!result)
-		return (free(new_acc), NULL);
+	{
+		free(*acc_ptr);
+		*acc_ptr = NULL;
+		return (NULL);		
+	}
 	ft_strlcpy(result, *acc_ptr, size_res + 1);
 	free(*acc_ptr);
 	*acc_ptr = new_acc;
