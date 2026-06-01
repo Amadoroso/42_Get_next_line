@@ -12,6 +12,8 @@ The project must be compiled using `cc` with the mandatory flags and a defined b
 
 `X can be any number you'd like` (as long as it doesn't exceed the PC's available memory).
 
+`X defaults to 42`.
+
 >[!NOTE]
 >All code adheres to **42 Norm V4**
 
