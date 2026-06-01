@@ -6,7 +6,7 @@
 /*   By: apinho-a <apinho-a@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 22:32:44 by apinho-a          #+#    #+#             */
-/*   Updated: 2026/05/27 19:03:15 by apinho-a         ###   ########.fr       */
+/*   Updated: 2026/06/01 19:22:37 by apinho-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	if (!s2)
 		return (NULL);
-	len1 = ft_strlen(s1, 0);
-	len2 = ft_strlen(s2, 0);
+	len1 = ft_strlen_mod(s1, 0);
+	len2 = ft_strlen_mod(s2, 0);
 	s1_s2 = (char *) malloc((len1 + len2 + 1) * sizeof(char));
-	if (s1_s2 == 0)
+	if (!s1_s2)
 		return (free(s1), NULL);
 	ft_strlcpy(s1_s2, s1, len1 + 1);
 	ft_strlcpy(s1_s2 + len1, s2, len2 + 1);
@@ -31,7 +31,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (s1_s2);
 }
 
-size_t	ft_strlen(const char *s, char end)
+size_t	ft_strlen_mod(const char *s, char end)
 {
 	size_t	len;
 
@@ -39,6 +39,8 @@ size_t	ft_strlen(const char *s, char end)
 	if (!s)
 		return (len);
 	while (*(s + len) != 0 && *(s + len) != end)
+		len++;
+	if (*(s + len) == '\n')
 		len++;
 	return (len);
 }
@@ -48,7 +50,9 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	size_t	len;
 	size_t	index;
 
-	len = ft_strlen(src, 0);
+	len = ft_strlen_mod(src, 0);
+	if (len == 0)
+		return (len);
 	if (size == 0)
 		return (len);
 	index = 0;
@@ -61,64 +65,45 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	return (len);
 }
 
-size_t	ft_new_line_check(char *acc, ssize_t BUF_SIZE, ssize_t cycle)
+size_t	ft_new_line_check(char *acc)
 {
-	ssize_t	start;
-	ssize_t	end;
-
 	if (!acc)
 		return (0);
-	end = BUF_SIZE * cycle;
-	start = BUF_SIZE * (cycle - 1);
-	while (start < end && start >= 0)
+	while (*acc)
 	{
-		if (*(acc + start) == '\n' || *(acc + start) == 0)
+		if (*acc == '\n')
 			return (1);
-		start++;
+		acc++;
 	}
 	return (0);
 }
 
 char	*ft_split_mini(char **acc_ptr)
 {
-	int		size_res;
-	int		size_acc;
+	size_t	len_res;
+	size_t	len_acc;
 	char	*result;
 	char	*new_acc;
-
+	
 	if (!*acc_ptr)
-		return (NULL);
-	if (**acc_ptr == 0)
+		return (free(*acc_ptr), *acc_ptr = NULL, NULL);
+	len_res = ft_strlen_mod(*acc_ptr, '\n');
+	if (*(*acc_ptr + len_res) != 0) // ha coisas a frente, podes ler
 	{
-		free(*acc_ptr);
-		*acc_ptr = NULL;
-		return (NULL);
+		len_acc = ft_strlen_mod(*acc_ptr + len_res, 0);
+		new_acc = malloc(len_acc + 1 *sizeof(char));
+		if (!new_acc)
+			return (free(*acc_ptr), *acc_ptr = NULL, NULL);
+		ft_strlcpy(new_acc, *acc_ptr + len_res, len_acc + 1);
 	}
-	size_res = ft_strlen(*acc_ptr, '\n');
-	if (*(*acc_ptr + size_res) == 0)
-		new_acc = NULL;
 	else
 	{
-		size_acc = ft_strlen(*acc_ptr + size_res + 1, 0);
-		new_acc = (char *) malloc((size_acc + 1) * sizeof(char));
-		if (!new_acc)
-		{
-			free (*acc_ptr);
-			*acc_ptr = NULL;
-			return (NULL);
-		}
-		ft_strlcpy(new_acc, *acc_ptr + size_res + 1, size_acc + 1);
-		size_res++;
+		len_acc = 0;
+		new_acc = NULL;
 	}
-	result = (char *) malloc((size_res + 1) * sizeof(char));
+	result = malloc(len_res + 1 * sizeof(char));
 	if (!result)
-	{
-		free(*acc_ptr);
-		*acc_ptr = NULL;
-		return (NULL);		
-	}
-	ft_strlcpy(result, *acc_ptr, size_res + 1);
-	free(*acc_ptr);
-	*acc_ptr = new_acc;
-	return (result);
+		return (free(*acc_ptr), *acc_ptr = NULL, free(new_acc), NULL);
+	ft_strlcpy(result, *acc_ptr, len_res + 1);
+	return (free(*acc_ptr), *acc_ptr = new_acc, result);
 }

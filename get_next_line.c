@@ -6,7 +6,7 @@
 /*   By: apinho-a <apinho-a@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 22:31:59 by apinho-a          #+#    #+#             */
-/*   Updated: 2026/05/27 19:08:05 by apinho-a         ###   ########.fr       */
+/*   Updated: 2026/06/01 19:23:24 by apinho-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 char	*get_next_line(int fd)
 {
 	ssize_t		read_rtrn;
-	size_t		cycle;
 	char		*buffer;
 	static char	*acc;
 
@@ -24,28 +23,18 @@ char	*get_next_line(int fd)
 	buffer = (char *) malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
 		return (NULL);
-	cycle = 0;
 	read_rtrn = 0;
-	while (!ft_new_line_check(acc, BUFFER_SIZE, cycle))
+	while (!ft_new_line_check(acc))
 	{
 		read_rtrn = read(fd, buffer, BUFFER_SIZE);
 		if (read_rtrn == -1)
-		{
-			free(acc);
-			acc = NULL;
-			return (free(buffer), NULL);			
-		}
+			return (free(acc), acc = NULL, free(buffer), NULL);	
 		if (read_rtrn == 0)
 			break ;
 		*(buffer + read_rtrn) = 0;
 		acc = ft_strjoin(acc, buffer);
 		if (!acc)
-		{
-			free(acc);
-			acc = NULL;
-			return (free(buffer), NULL);
-		}
-		cycle++;
+			return (free(acc), acc = NULL, free(buffer), NULL);
 	}
 	return (free(buffer), ft_split_mini(&acc));
 }
@@ -76,9 +65,9 @@ char	*get_next_line(int fd)
 	char	*str;
 
 	fd = open("test", O_RDWR | O_CREAT, 0644);
-	write(fd, 0, 1);
+	write(fd, "0123456789012345678901234567890123456789\n0", 42);
 	close(fd);
-	fd = open("multiple_line_with_no_nl", O_RDONLY);
+	fd = open("test", O_RDONLY);
 	str = get_next_line(fd);
 	printf("%s", str);
 	free (str);
