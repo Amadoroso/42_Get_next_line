@@ -6,7 +6,7 @@
 /*   By: apinho-a <apinho-a@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 22:31:59 by apinho-a          #+#    #+#             */
-/*   Updated: 2026/06/01 19:23:24 by apinho-a         ###   ########.fr       */
+/*   Updated: 2026/06/01 19:49:07 by apinho-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ char	*get_next_line(int fd)
 		return (NULL);
 	buffer = (char *) malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
-		return (NULL);
+		return (free(acc), acc = NULL, NULL);
 	read_rtrn = 0;
 	while (!ft_new_line_check(acc))
 	{
 		read_rtrn = read(fd, buffer, BUFFER_SIZE);
 		if (read_rtrn == -1)
-			return (free(acc), acc = NULL, free(buffer), NULL);	
+			return (free(acc), acc = NULL, free(buffer), NULL);
 		if (read_rtrn == 0)
 			break ;
 		*(buffer + read_rtrn) = 0;
@@ -38,20 +38,6 @@ char	*get_next_line(int fd)
 	}
 	return (free(buffer), ft_split_mini(&acc));
 }
-
-/* int main()
-{
-	int fd;
-	int i;
-
-	fd = open("test1", O_RDWR | O_CREAT, 0644);
-
-	i = -20;
-	while (i++ < 0)
-		printf("%s", get_next_line(fd));
-	return (0);
-	
-} */
 
 /* int main()
 {
@@ -65,7 +51,7 @@ char	*get_next_line(int fd)
 	char	*str;
 
 	fd = open("test", O_RDWR | O_CREAT, 0644);
-	write(fd, "0123456789012345678901234567890123456789\n0", 42);
+	write(fd, NULL, 1);
 	close(fd);
 	fd = open("test", O_RDONLY);
 	str = get_next_line(fd);

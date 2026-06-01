@@ -6,7 +6,7 @@
 /*   By: apinho-a <apinho-a@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 22:32:44 by apinho-a          #+#    #+#             */
-/*   Updated: 2026/06/01 19:22:37 by apinho-a         ###   ########.fr       */
+/*   Updated: 2026/06/01 19:49:05 by apinho-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	size_t	index;
 
 	len = ft_strlen_mod(src, 0);
-	if (len == 0)
-		return (len);
 	if (size == 0)
 		return (len);
 	index = 0;
@@ -84,23 +82,20 @@ char	*ft_split_mini(char **acc_ptr)
 	size_t	len_acc;
 	char	*result;
 	char	*new_acc;
-	
+
 	if (!*acc_ptr)
-		return (free(*acc_ptr), *acc_ptr = NULL, NULL);
+		return (NULL);
 	len_res = ft_strlen_mod(*acc_ptr, '\n');
-	if (*(*acc_ptr + len_res) != 0) // ha coisas a frente, podes ler
+	if (*(*acc_ptr + len_res) != 0)
 	{
 		len_acc = ft_strlen_mod(*acc_ptr + len_res, 0);
-		new_acc = malloc(len_acc + 1 *sizeof(char));
+		new_acc = malloc(len_acc + 1 * sizeof(char));
 		if (!new_acc)
 			return (free(*acc_ptr), *acc_ptr = NULL, NULL);
 		ft_strlcpy(new_acc, *acc_ptr + len_res, len_acc + 1);
 	}
 	else
-	{
-		len_acc = 0;
 		new_acc = NULL;
-	}
 	result = malloc(len_res + 1 * sizeof(char));
 	if (!result)
 		return (free(*acc_ptr), *acc_ptr = NULL, free(new_acc), NULL);
